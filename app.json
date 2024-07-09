@@ -1,0 +1,96 @@
+{
+  "expo": {
+    "name": "PMC-APP",
+    "slug": "PMC-APP",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./assets/images/PMCEcosystemSplash.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "splash": {
+        "image": "./assets/images/PMCEcosystemSplash.jpg",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      },
+      "userInterfaceStyle": "automatic",
+      "buildNumber": "1",
+      "bundleIdentifier": "com.pmc.one",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "Ứng dụng cần truy cập vào máy ảnh của bạn để bạn có thể chụp và tải lên hình đại diện hoặc quét mã QR.",
+        "NSLocationWhenInUseUsageDescription": "Ứng dụng cần truy cập vào vị trí của bạn để cung cấp gợi ý về các địa điểm gần bạn và cải thiện trải nghiệm của bạn."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "versionCode": 1,
+      "package": "com.pmc.one",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
+      "userInterfaceStyle": "automatic"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Ứng dụng cần truy cập vào máy ảnh của bạn để bạn có thể chụp và tải lên hình đại diện hoặc quét mã QR."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Ứng dụng truy cập vào ảnh của bạn để cho phép bạn chia sẻ chúng với bạn bè của bạn."
+        }
+      ],
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Ứng dụng cần truy cập vào máy ảnh của bạn để quét mã QR và mã vạch."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Ứng dụng cần truy cập vào vị trí của bạn để cung cấp gợi ý về các địa điểm gần bạn và cải thiện trải nghiệm của bạn."
+        }
+      ],
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "855105a4-20a6-4358-a226-b9007a124e2b"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/855105a4-20a6-4358-a226-b9007a124e2b"
+    }
+  }
+}
