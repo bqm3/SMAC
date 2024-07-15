@@ -79,7 +79,7 @@ const DanhmucChecklist = ({ navigation }) => {
     ent_calv,
     ent_hangmuc,
   } = useSelector((state) => state.entReducer);
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const [listChecklist, setListChecklist] = useState([]);
   const [newActionCheckList, setNewActionCheckList] = useState([]);
@@ -201,7 +201,7 @@ const DanhmucChecklist = ({ navigation }) => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         }
       )
@@ -405,7 +405,7 @@ const DanhmucChecklist = ({ navigation }) => {
           {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           }
         );
@@ -521,7 +521,7 @@ const DanhmucChecklist = ({ navigation }) => {
           .put(BASE_URL_CHECKLIST + `/ent_checklist/update/${id}`, data, {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           })
           .then((response) => {
@@ -595,7 +595,7 @@ const DanhmucChecklist = ({ navigation }) => {
       .put(BASE_URL_CHECKLIST + `/ent_checklist/delete-all/${data}`, [], {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then((response) => {
@@ -639,7 +639,7 @@ const DanhmucChecklist = ({ navigation }) => {
         .post(BASE_URL_CHECKLIST + "/ent_checklist/filter", isFilterData, {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         })
         .then((res) => {

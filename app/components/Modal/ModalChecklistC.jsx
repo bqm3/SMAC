@@ -20,7 +20,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import ButtonSubmit from "../Button/ButtonSubmit";
 
 const ModalChecklistC = ({
-  ent_giamsat,
+  // ent_giamsat,
   ent_calv,
   dataInput,
   handleChangeText,
@@ -28,13 +28,60 @@ const ModalChecklistC = ({
   isLoading,
 }) => {
   const ref = useRef(null);
-  const defaultCalv = ent_calv?.find(
-    (calv) => calv.ID_Calv === dataInput?.Calv?.ID_Calv
-  );
-  const defaultGiamsat = ent_giamsat?.find(
-    (Giamsat) =>
-      Giamsat.ID_Giamsat !== null && Giamsat.ID_Giamsat === dataInput.ID_Giamsat
-  );
+  // const defaultCalv = ent_calv?.find(
+  //   (calv) => calv.ID_Calv === dataInput?.Calv?.ID_Calv
+  // );
+  // const defaultGiamsat = ent_giamsat?.find(
+  //   (Giamsat) =>
+  //     Giamsat.ID_Giamsat !== null && Giamsat.ID_Giamsat === dataInput.ID_Giamsat
+  // );
+
+  const ent_giamsat =[
+    {
+      "Gioitinh": "nam",
+      "Hoten": "gs làm sạch",
+      "ID_Chucvu": 2,
+      "ID_Duan": 10,
+      "ID_Giamsat": 33,
+      "ID_KhoiCV": 1,
+      "Ngaysinh": null,
+      "Sodienthoai": "123",
+      "ent_chucvu": {
+        "Chucvu": "Giám sát"
+      },
+      "ent_duan": {
+        "Duan": "Dự án Test"
+      },
+      "ent_khoicv": {
+        "ID_Khoi": 1,
+        "KhoiCV": "Khối làm sạch"
+      },
+      "iQuyen": 1,
+      "isDelete": 0
+    },
+    {
+      "Gioitinh": "nam",
+      "Hoten": "Nguyễn Hưng Tiến",
+      "ID_Chucvu": 2,
+      "ID_Duan": 10,
+      "ID_Giamsat": 86,
+      "ID_KhoiCV": 1,
+      "Ngaysinh": "2024-07-10T04:51:22.210Z",
+      "Sodienthoai": "0961228679",
+      "ent_chucvu": {
+        "Chucvu": "Giám sát"
+      },
+      "ent_duan": {
+        "Duan": "Dự án Test"
+      },
+      "ent_khoicv": {
+        "ID_Khoi": 1,
+        "KhoiCV": "Khối làm sạch"
+      },
+      "iQuyen": 1,
+      "isDelete": 0
+    }
+  ]
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -94,7 +141,6 @@ const ModalChecklistC = ({
               </Text>
               {ent_calv && ent_calv?.length > 0 ? (
                 <SelectDropdown
-                  ref={ref}
                   data={ent_calv ? ent_calv : []}
                   buttonStyle={styles.select}
                   dropdownStyle={{
@@ -104,7 +150,6 @@ const ModalChecklistC = ({
                   // rowStyle={{ height: 50, justifyContent: "center" }}
                   defaultButtonText={"Ca làm việc"}
                   buttonTextStyle={styles.customText}
-                  defaultValue={defaultCalv}
                   onSelect={(selectedItem, index) => {
                     handleChangeText("Calv", selectedItem);
                   }}
@@ -158,7 +203,6 @@ const ModalChecklistC = ({
               </Text>
               {ent_giamsat && ent_giamsat?.length > 0 ? (
                 <SelectDropdown
-                  ref={ref}
                   data={ent_giamsat ? ent_giamsat : []}
                   buttonStyle={styles.select}
                   dropdownStyle={{
@@ -168,7 +212,6 @@ const ModalChecklistC = ({
                   // rowStyle={{ height: 50, justifyContent: "center" }}
                   defaultButtonText={"Nhân viên"}
                   buttonTextStyle={styles.customText}
-                  defaultValue={defaultGiamsat}
                   onSelect={(selectedItem, index) => {
                     handleChangeText("ID_Giamsat", selectedItem.ID_Giamsat);
                   }}

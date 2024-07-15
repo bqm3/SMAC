@@ -94,7 +94,7 @@ const DanhmucTracuu = () => {
   const { ent_tang, ent_khuvuc, ent_toanha } = useSelector(
     (state) => state.entReducer
   );
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const [data, setData] = useState([]);
   const [dataKhuvuc, setDataKhuvuc] = useState(ent_khuvuc);
@@ -160,7 +160,7 @@ const DanhmucTracuu = () => {
       .post(BASE_URL_CHECKLIST + `/ent_khuvuc/filter`, data, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
 
@@ -231,7 +231,7 @@ const DanhmucTracuu = () => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         }
       )
@@ -251,7 +251,7 @@ const DanhmucTracuu = () => {
       .post(BASE_URL_CHECKLIST + `/tb_checklistchitiet/excel-checklist`, data, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then(async (res) => {
@@ -713,7 +713,7 @@ const DanhmucTracuu = () => {
                   </>
                 ))}
 
-              {user && user.Permission === 1 && (
+              {userChecklist && userChecklist.Permission === 1 && (
                 <TouchableOpacity
                   style={[styles.button]}
                   onPress={fetchDataExcel}

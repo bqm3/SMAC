@@ -49,7 +49,7 @@ const ThucHienKhuvuc = ({ route, navigation }) => {
     (state) => state.entReducer
   );
 
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const [opacity, setOpacity] = useState(1);
   const [submit, setSubmit] = useState(true);
@@ -415,7 +415,7 @@ const ThucHienKhuvuc = ({ route, navigation }) => {
       {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       }
     );
@@ -493,7 +493,7 @@ const ThucHienKhuvuc = ({ route, navigation }) => {
       {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       }
     );
@@ -522,7 +522,7 @@ const ThucHienKhuvuc = ({ route, navigation }) => {
       {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       }
     );
@@ -567,14 +567,14 @@ const ThucHienKhuvuc = ({ route, navigation }) => {
       ID_ChecklistC: ID_ChecklistC,
       toanhaIds: toanhaIds.join(", "),
       ID_Calv: ID_Calv,
-      ID_User: user.ID_User,
+      ID_User: userChecklist.ID_User,
     };
 
     await axios
       .post(BASE_URL_CHECKLIST + "/tb_checklistc/toanha", data, {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then((res) => {

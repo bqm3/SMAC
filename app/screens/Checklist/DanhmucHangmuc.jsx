@@ -41,7 +41,7 @@ import ModalHangmuc from "../../components/Modal/ModalHangmuc";
 // const DanhmucHangmuc = ({ navigation }) => {
 //   const dispath = useDispatch();
 //   const { ent_khuvuc, ent_hangmuc } = useSelector((state) => state.entReducer);
-//   const { user, authToken } = useSelector((state) => state.authReducer);
+//   const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
 //   const bottomSheetModalRef = useRef(null);
 //   const snapPoints = useMemo(() => ["80%"], []);
@@ -116,7 +116,7 @@ import ModalHangmuc from "../../components/Modal/ModalHangmuc";
 //           {
 //             headers: {
 //               Accept: "application/json",
-//               Authorization: "Bearer " + authToken,
+//               Authorization: "Bearer " + authTokenChecklist,
 //             },
 //           }
 //         );
@@ -208,7 +208,7 @@ import ModalHangmuc from "../../components/Modal/ModalHangmuc";
 //           .put(BASE_URL_CHECKLIST + `/ent_hangmuc/update/${id}`, data, {
 //             headers: {
 //               Accept: "application/json",
-//               Authorization: "Bearer " + authToken,
+//               Authorization: "Bearer " + authTokenChecklist,
 //             },
 //           })
 //           .then((response) => {
@@ -279,7 +279,7 @@ import ModalHangmuc from "../../components/Modal/ModalHangmuc";
 //       .put(BASE_URL_CHECKLIST + `/ent_hangmuc/delete/${id}`, [], {
 //         headers: {
 //           Accept: "application/json",
-//           Authorization: "Bearer " + authToken,
+//           Authorization: "Bearer " + authTokenChecklist,
 //         },
 //       })
 //       .then((response) => {

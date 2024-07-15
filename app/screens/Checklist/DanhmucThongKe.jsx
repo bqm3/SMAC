@@ -84,7 +84,7 @@ const DanhmucThongKe = ({ handlePresentModalPress2 }) => {
   const dispath = useDispatch();
   const { ent_giamsat, ent_calv } = useSelector((state) => state.entReducer);
   const { tb_checklistc } = useSelector((state) => state.tbReducer);
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const date = new Date();
   const dateDay = moment(date).format("YYYY-MM-DD");
@@ -111,7 +111,7 @@ const DanhmucThongKe = ({ handlePresentModalPress2 }) => {
     dateHour: dateHour,
     Calv: null,
     ID_Giamsat: null,
-    ID_Duan: user?.ID_Duan,
+    ID_Duan: userChecklist?.ID_Duan,
   });
 
   const [dataImages, setDataImages] = useState({

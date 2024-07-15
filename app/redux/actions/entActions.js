@@ -7,7 +7,7 @@ import moment from "moment";
 export const ent_khoicv_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_khoicv", {
           headers: {
@@ -16,6 +16,7 @@ export const ent_khoicv_get = () => {
           },
         });
         const data = response.data.data;
+        console.log('data',data)
         dispatch({
           type: type.SET_ENT_KHOICV_SUCCESS,
           payload: {
@@ -34,7 +35,7 @@ export const ent_khoicv_get = () => {
 export const ent_calv_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
 
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_calv", {
@@ -62,7 +63,7 @@ export const ent_calv_get = () => {
 export const ent_calv_filter = (id) => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
 
       if (token !== null) {
         const response = await axios.post(BASE_URL_CHECKLIST + `/ent_calv`,{ID_KhoiCV: id}, {
@@ -90,7 +91,7 @@ export const ent_calv_filter = (id) => {
 export const ent_giamsat_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_giamsat", {
           headers: {
@@ -117,7 +118,7 @@ export const ent_giamsat_get = () => {
 export const ent_toanha_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_toanha", {
           headers: {
@@ -144,7 +145,7 @@ export const ent_toanha_get = () => {
 export const ent_khuvuc_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.post(BASE_URL_CHECKLIST + "/ent_khuvuc/filter",{}, {
           headers: {
@@ -171,7 +172,7 @@ export const ent_khuvuc_get = () => {
 export const ent_duan_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_duan", {
           headers: {
@@ -198,7 +199,7 @@ export const ent_duan_get = () => {
 export const ent_chucvu_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_chucvu", {
           headers: {
@@ -225,7 +226,7 @@ export const ent_chucvu_get = () => {
 export const ent_checklist_get = (pag) => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + `/ent_checklist/?page=${pag.page}&limit=${pag.limit}`, {
           headers: {
@@ -265,7 +266,7 @@ export const ent_checklist_get_detail = (ID_KhoiCV, ID_ChecklistC, ID_Calv, ID_H
       },
     });
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       
       if (token !== null) {
         const response = await axios.get(
@@ -302,7 +303,7 @@ export const ent_checklist_get_detail = (ID_KhoiCV, ID_ChecklistC, ID_Calv, ID_H
 export const ent_tang_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_tang", {
           headers: {
@@ -329,7 +330,7 @@ export const ent_tang_get = () => {
 export const ent_hangmuc_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_hangmuc", {
           headers: {
@@ -356,7 +357,7 @@ export const ent_hangmuc_get = () => {
 export const ent_users_get = () => {
   return async (dispatch) => {
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       if (token !== null) {
         const response = await axios.get(BASE_URL_CHECKLIST + "/ent_user/get-online", {
           headers: {
@@ -391,7 +392,7 @@ export const ent_checklist_mul_hm = (dataHangmuc, ID_Calv, ID_ChecklistC) => {
       },
     });
     try {
-      const token = await AsyncStorage.getItem("tokenUser");
+      const token = await AsyncStorage.getItem("tokenUserChecklist");
       
       if (token !== null) {
         const response = await axios.put(

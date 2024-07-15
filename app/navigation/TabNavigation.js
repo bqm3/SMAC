@@ -67,7 +67,7 @@ const HomeStack = ({ navigation }) => {
           headerLeft: () => (
             <Image
               style={{ width: adjust(80), height: adjust(36), resizeMode: "cover" }}
-              source={require("../../assets/images/pmc.png")}
+              source={require("../../assets/images/pmc_logo.png")}
             />
           ),
           headerRight: () => (

@@ -46,7 +46,7 @@ const DanhmucCalamviec = ({ navigation }) => {
   const { ent_toanha, ent_khuvuc, ent_khoicv } = useSelector(
     (state) => state.entReducer
   );
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["90%"], []);
@@ -134,7 +134,7 @@ const DanhmucCalamviec = ({ navigation }) => {
           {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           }
         );
@@ -228,7 +228,7 @@ const DanhmucCalamviec = ({ navigation }) => {
           .put(BASE_URL_CHECKLIST + `/ent_khuvuc/update/${id}`, data, {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           })
           .then((response) => {
@@ -298,7 +298,7 @@ const DanhmucCalamviec = ({ navigation }) => {
       .put(BASE_URL_CHECKLIST + `/ent_khuvuc/delete/${id}`, [], {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then((response) => {

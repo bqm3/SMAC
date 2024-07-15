@@ -58,7 +58,7 @@ const MultipleScreen = ({ navigation }) => {
         >
           <BottomSheetModalProvider>
             <ImageBackground
-              source={require("../../assets/images/PMCEcosystemBg2.png")}
+              source={require("../../assets/PMCONE2.png")}
               resizeMode="cover"
               style={styles.defaultFlex}
             >

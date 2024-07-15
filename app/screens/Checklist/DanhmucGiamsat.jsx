@@ -52,7 +52,7 @@ const DanhmucGiamsat = ({ navigation }) => {
   const { ent_giamsat, ent_chucvu, ent_duan, ent_khoicv } = useSelector(
     (state) => state.entReducer
   );
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["80%"], []);
@@ -102,7 +102,7 @@ const DanhmucGiamsat = ({ navigation }) => {
   }, []); //
 
   const [dataInput, setDataInput] = useState({
-    ID_Duan: user.ID_Duan,
+    ID_Duan: userChecklist.ID_Duan,
     hoten: "",
     gioitinh: "",
     ngaysinh: "",
@@ -131,7 +131,7 @@ const DanhmucGiamsat = ({ navigation }) => {
       ]);
     } else {
       let data = {
-        ID_Duan: user.ID_Duan,
+        ID_Duan: userChecklist.ID_Duan,
         Hoten: dataInput.hoten,
         Gioitinh: dataInput.gioitinh,
         Sodienthoai: dataInput.sodienthoai,
@@ -145,7 +145,7 @@ const DanhmucGiamsat = ({ navigation }) => {
         .post(BASE_URL_CHECKLIST + "/ent_giamsat/create", data, {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         })
         .then((response) => {
@@ -193,7 +193,7 @@ const DanhmucGiamsat = ({ navigation }) => {
   const handleEditEnt = async (data) => {
     handlePresentModalPress();
     setDataInput({
-      ID_Duan: user.ID_Duan,
+      ID_Duan: userChecklist.ID_Duan,
       hoten: data.Hoten,
       gioitinh: data.Gioitinh,
       ngaysinh: data.Ngaysinh,
@@ -221,7 +221,7 @@ const DanhmucGiamsat = ({ navigation }) => {
       ]);
     } else {
       let data = {
-        ID_Duan: user.ID_Duan,
+        ID_Duan: userChecklist.ID_Duan,
         Hoten: dataInput.hoten,
         Gioitinh: dataInput.gioitinh,
         Sodienthoai: dataInput.sodienthoai,
@@ -239,7 +239,7 @@ const DanhmucGiamsat = ({ navigation }) => {
           {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           }
         )
@@ -288,7 +288,7 @@ const DanhmucGiamsat = ({ navigation }) => {
       .put(BASE_URL_CHECKLIST + `/ent_giamsat/delete/${id}`, [], {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then((response) => {
@@ -328,7 +328,7 @@ const DanhmucGiamsat = ({ navigation }) => {
 
   const handleAdd = () => {
     setDataInput({
-      ID_Duan: user.ID_Duan,
+      ID_Duan: userChecklist.ID_Duan,
       hoten: "",
       gioitinh: "",
       ngaysinh: "",

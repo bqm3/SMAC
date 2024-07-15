@@ -96,8 +96,9 @@ const ThucHienChecklist = ({ navigation }) => {
     (state) => state.entReducer
   );
   const { tb_checklistc } = useSelector((state) => state.tbReducer);
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
   const { setDataHangmuc, stepKhuvuc } = useContext(DataContext);
+  
 
   const date = new Date();
   const dateDay = moment(date).format("YYYY-MM-DD");
@@ -124,7 +125,7 @@ const ThucHienChecklist = ({ navigation }) => {
     dateHour: dateHour,
     Calv: null,
     ID_Giamsat: null,
-    ID_Duan: user?.ID_Duan,
+    ID_Duan: userChecklist?.ID_Duan,
   });
 
   const [dataImages, setDataImages] = useState({
@@ -335,7 +336,7 @@ const ThucHienChecklist = ({ navigation }) => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           }
         )
@@ -411,10 +412,10 @@ const ThucHienChecklist = ({ navigation }) => {
     } else {
       let data = {
         ID_Calv: dataInput.Calv.ID_Calv,
-        ID_User: user.ID_User,
+        ID_User: userChecklist.ID_User,
         ID_Giamsat: dataInput.ID_Giamsat,
-        ID_Duan: user.ID_Duan,
-        ID_KhoiCV: user.ID_KhoiCV,
+        ID_Duan: userChecklist.ID_Duan,
+        ID_KhoiCV: userChecklist.ID_KhoiCV,
         Ngay: dataInput.dateDay,
         Giobd: dataInput.dateHour,
       };
@@ -424,7 +425,7 @@ const ThucHienChecklist = ({ navigation }) => {
           .post(BASE_URL_CHECKLIST + "/tb_checklistc/create", data, {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           })
           .then((response) => {
@@ -521,7 +522,7 @@ const ThucHienChecklist = ({ navigation }) => {
       dateHour: dateHour,
       Calv: null,
       ID_Giamsat: null,
-      ID_Duan: user?.ID_Duan,
+      ID_Duan: userChecklist?.ID_Duan,
     });
     setDataImages({
       Giochupanh1: null,
@@ -552,12 +553,12 @@ const ThucHienChecklist = ({ navigation }) => {
       .put(
         BASE_URL_CHECKLIST + `/tb_checklistc/close/${ID_ChecklistC}`,
         {
-          Giokt: dateHour,
+          Giokt: moment(date).format("HH:mm:ss"),
         },
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         }
       )
@@ -574,6 +575,7 @@ const ThucHienChecklist = ({ navigation }) => {
         ]);
       })
       .catch((err) => {
+        console.log(err.response)
         Alert.alert("PMC Thông báo", "Khóa ca thất bại. Vui lòng thử lại!!", [
           {
             text: "Hủy",
@@ -783,7 +785,7 @@ const ThucHienChecklist = ({ navigation }) => {
                     }}
                   >
                    
-                      {user?.Permission !== 1 && (
+                      {userChecklist?.Permission !== 1 && (
                         <ButtonChecklist
                           text={"Thêm mới"}
                           width={"auto"}
@@ -939,7 +941,7 @@ const ThucHienChecklist = ({ navigation }) => {
                       paddingTop: 10,
                     }}
                   >
-                    {user?.ent_khoicv?.KhoiCV}
+                    {userChecklist?.ent_khoicv?.KhoiCV}
                   </Text>
                   <ModalChecklistC
                     ent_giamsat={ent_giamsat}
@@ -974,7 +976,7 @@ const ThucHienChecklist = ({ navigation }) => {
                 </View>
               </BottomSheetModal>
 
-              {newActionCheckList?.length > 0 && user?.Permission !== 1 && (
+              {newActionCheckList?.length > 0 && userChecklist?.Permission !== 1 && (
                 <View
                   style={{
                     width: 60,

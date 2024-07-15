@@ -84,7 +84,7 @@ export const loginAssets = (MaPMC, Password) => {
         });
       }
     } catch (e) {
-      console.log('e',e)
+      console.log('asset',e)
       dispatch({
         type: type.ASSET_SET_LOGIN_FAIL,
         payload: {

@@ -1,23 +1,21 @@
 {
   "expo": {
-    "name": "PMC-APP",
+    "name": "SMAC",
     "slug": "PMC-APP",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "splash": {
-      "image": "./assets/images/PMCEcosystemSplash.jpg",
+      "image": "./assets/PMCONESplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
       "splash": {
-        "image": "./assets/images/PMCEcosystemSplash.jpg",
+        "image": "./assets/PMCONESplash.png",
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       },
@@ -37,6 +35,7 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
+      "withoutCredentials": true,
       "versionCode": 1,
       "package": "com.pmc.one",
       "permissions": [
@@ -48,7 +47,8 @@
       "runtimeVersion": {
         "policy": "appVersion"
       },
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
@@ -88,9 +88,6 @@
       "eas": {
         "projectId": "855105a4-20a6-4358-a226-b9007a124e2b"
       }
-    },
-    "updates": {
-      "url": "https://u.expo.dev/855105a4-20a6-4358-a226-b9007a124e2b"
     }
   }
 }

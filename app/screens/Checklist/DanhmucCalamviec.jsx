@@ -41,7 +41,7 @@ import ModalCalamviec from "../../components/Modal/ModalCalamviec";
 const DanhmucCalamviec = ({ navigation }) => {
   const dispath = useDispatch();
   const { ent_khoicv, ent_calv } = useSelector((state) => state.entReducer);
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["80%"], []);
@@ -108,7 +108,7 @@ const DanhmucCalamviec = ({ navigation }) => {
         Giobatdau: dataInput.giobd,
         Gioketthuc: dataInput.giokt,
         ID_KhoiCV: dataInput.khoicv,
-        ID_Duan: user.ID_Duan,
+        ID_Duan: userChecklist.ID_Duan,
       };
       setLoadingSubmit(true);
 
@@ -117,7 +117,7 @@ const DanhmucCalamviec = ({ navigation }) => {
           .post(BASE_URL_CHECKLIST + `/ent_calv/create`, data, {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           })
           .then((response) => {
@@ -203,7 +203,7 @@ const DanhmucCalamviec = ({ navigation }) => {
         Giobatdau: dataInput.giobd,
         Gioketthuc: dataInput.giokt,
         ID_KhoiCV: dataInput.khoicv,
-        ID_Duan: user.ID_Duan,
+        ID_Duan: userChecklist.ID_Duan,
       };
       setLoadingSubmit(true);
       try {
@@ -211,7 +211,7 @@ const DanhmucCalamviec = ({ navigation }) => {
           .put(BASE_URL_CHECKLIST + `/ent_calv/update/${id}`, data, {
             headers: {
               Accept: "application/json",
-              Authorization: "Bearer " + authToken,
+              Authorization: "Bearer " + authTokenChecklist,
             },
           })
           .then((response) => {
@@ -283,7 +283,7 @@ const DanhmucCalamviec = ({ navigation }) => {
       .put(BASE_URL_CHECKLIST + `/ent_calv/delete/${id}`, [], {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       })
       .then((response) => {

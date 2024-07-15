@@ -5,25 +5,29 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./app/redux/store";
 import { ThemeProvider } from "./app/context/ThemeContext";
 import CheckNavigation from "./app/navigation/CheckNavigation";
-// // import { LoginProvider } from "./app/context/LoginContext";
-// // import { UserProvider } from "./app/context/UserContext";
-// // import { DataProvider } from "./app/context/DataContext";
-// // import { ChecklistProvider } from "./app/context/ChecklistContext";
+import { UserProvider } from "./app/context/UserContext";
+import { DataProvider } from "./app/context/DataContext";
+import { ChecklistProvider } from "./app/context/ChecklistContext";
 
 import { PaperProvider } from "react-native-paper";
 
 // // require("moment/locale/vi");
-import SwitchTheme from "./app/screens/SwitchTheme";
 
 export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider>
         <ThemeProvider>
-          <NavigationContainer>
-            <StatusBar />
-            <CheckNavigation />
-          </NavigationContainer>
+          <UserProvider>
+            <DataProvider>
+              <ChecklistProvider>
+                <NavigationContainer>
+                  <StatusBar />
+                  <CheckNavigation />
+                </NavigationContainer>
+              </ChecklistProvider>
+            </DataProvider>
+          </UserProvider>
         </ThemeProvider>
       </PaperProvider>
     </Provider>

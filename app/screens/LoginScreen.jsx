@@ -121,15 +121,6 @@ const LoginScreen = ({ navigation }) => {
     loadData();
   }, []);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setData({
-  //       UserName: data?.UserName,
-  //       Password: data?.Password,
-  //     });
-  //   }
-  // }, [user]);
-
   const handleToggle = async () => {
     setIsChecked(!isChecked);
     if (!isChecked) {
@@ -195,7 +186,7 @@ const LoginScreen = ({ navigation }) => {
         >
           <BottomSheetModalProvider>
             <ImageBackground
-              source={require("../../assets/images/PMCEcosystemBg1.png")}
+              source={require("../../assets/PMCONE1.png")}
               resizeMode="cover"
               style={styles.defaultFlex}
             >
@@ -300,11 +291,7 @@ const LoginScreen = ({ navigation }) => {
 
                     <View style={{ height: 20 }} />
                     <ButtonSubmit
-                      backgroundColor={
-                        theme === "dark"
-                          ? darkColors.background
-                          : lightColors.background
-                      }
+                      backgroundColor={"black"}
                       text={"Đăng Nhập"}
                       isLoading={isLoadingAsset || isLoadingChecklist}
                       onPress={handleSubmit}

@@ -75,30 +75,11 @@ const dataDanhMucPSH = [
 ];
 // create a component
 const HomeScreen = ({ navigation }) => {
-  console.log('run home')
-  const { authToken } = useSelector((state) => state.authReducer);
-  const user = {
-    ID_User: 36,
-    UserName: "gstest",
-    Permission: 2,
-    ID_Duan: 10,
-    Password: "$2b$10$Q8dcPUwbBYnv1rO.YS/00uNIyE5VC3KcKEix1g6ueodhz0JNJnhHe",
-    ID_KhoiCV: 1,
-    Emails: "gstest@gmail.com",
-    isDelete: 0,
-    ent_duan: {
-      Duan: "Dự án Test",
-    },
-    ent_chucvu: {
-      Chucvu: "Giám sát",
-    },
-    ent_khoicv: {
-      KhoiCV: "Khối làm sạch",
-    },
-  };
+  
+  const { authTokenChecklist, userChecklist } = useSelector((state) => state.authReducer);
 
   const renderItem = ({ item, index }) => (
-    <ItemHome roleUser={user?.Permission} item={item} index={index} />
+    <ItemHome roleUser={userChecklist?.Permission} item={item} index={index} />
   );
 
   const renderItemPSH = ({ item, index }) => (
@@ -111,7 +92,7 @@ const HomeScreen = ({ navigation }) => {
       resizeMode="cover"
       style={{ flex: 1 }}
     >
-      {user?.ent_chucvu?.Chucvu == "PSH" ? (
+      {userChecklist?.ent_chucvu?.Chucvu == "PSH" ? (
         <>
           <View style={styles.container}>
             <View
@@ -168,7 +149,7 @@ const HomeScreen = ({ navigation }) => {
                 paddingTop: 8,
               }}
             >
-              Dự án: {user?.ent_duan?.Duan}
+              Dự án: {userChecklist?.ent_duan?.Duan}
             </Text>
           </View>
 
