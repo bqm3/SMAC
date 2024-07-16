@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import {
@@ -13,6 +13,7 @@ import {
   DanhmucHangmuc,
   ThucHienHangmuc,
   ThucHienKhuvuc,
+  ProfileScreen
 } from "../screens/Checklist";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
@@ -22,6 +23,7 @@ import MultipleScreen from "../screens/MultipleScreen";
 import { COLORS } from "../constants/theme";
 import adjust from "../constants/adjust";
 import { Image, Button, Text, TouchableOpacity, Platform } from "react-native";
+import ScanContext from "../context/ScanContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +42,8 @@ const Back = ({ navigation, title }) => {
 const DefaultNavigation = () => {
   const { authTokenAsset, userAsset, authTokenChecklist, userChecklist } =
     useSelector((state) => state.authReducer);
+
+  const { step, saveStep } = useContext(ScanContext);
 
   return (
     <>
@@ -68,9 +72,34 @@ const DefaultNavigation = () => {
 
             <Stack.Group>
               <Stack.Screen
-                options={{ headerShown: false }}
                 name="ScanScreen"
                 component={ScanScreen}
+                options={({ route, navigation }) => ({
+                  headerShown: step === 1 ? true : false,
+                  headerStyle: {
+                    backgroundColor: COLORS.bg_white,
+                  },
+                  headerTitle: () => (
+                    <Text
+                      allowFontScaling={false}
+                      style={{
+                        fontSize: adjust(18),
+                        fontWeight: "700",
+                        color: "black",
+                      }}
+                    >
+                      Quản lý tài sản
+                    </Text>
+                  ),
+                  headerLeft: () => (
+                    <Ionicons
+                      onPress={() => navigation.goBack()}
+                      name="chevron-back"
+                      size={adjust(24)}
+                      color="black"
+                    />
+                  ),
+                })}
               />
             </Stack.Group>
             <Stack.Group>
@@ -112,35 +141,43 @@ const DefaultNavigation = () => {
                   ),
                 })}
               />
-              {/* <Stack.Screen
-         name="Profile"
-         component={Profile}
-         lazy={false}
-         options={({ navigation, route }) => ({
-           headerShown: true,
- 
-           headerTitle: () => (
-             <Text allowFontScaling={false}
-               
-               style={{ fontSize: adjust(20), fontWeight: "700", color: "white" }}
-             >
-               Thông tin cá nhân
-             </Text>
-           ),
-           headerLeft: () => (
-             <TouchableOpacity onPress={() => navigation.goBack()}>
-               {Platform.OS === "ios" && (
-                 <Ionicons name="chevron-back" size={adjust(28)} color="white" />
-               )}
-             </TouchableOpacity>
-           ),
-           headerTitleAlign: "center",
-           headerStyle: {
-             backgroundColor: COLORS.bg_button,
-           },
-           headerBackTitleVisible: false,
-         })}
-       /> */}
+              <Stack.Screen
+                name="Profile"
+                component={ProfileScreen}
+                lazy={false}
+                options={({ navigation, route }) => ({
+                  headerShown: true,
+
+                  headerTitle: () => (
+                    <Text
+                      allowFontScaling={false}
+                      style={{
+                        fontSize: adjust(20),
+                        fontWeight: "700",
+                        color: "white",
+                      }}
+                    >
+                      Thông tin cá nhân
+                    </Text>
+                  ),
+                  headerLeft: () => (
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                      {Platform.OS === "ios" && (
+                        <Ionicons
+                          name="chevron-back"
+                          size={adjust(28)}
+                          color="white"
+                        />
+                      )}
+                    </TouchableOpacity>
+                  ),
+                  headerTitleAlign: "center",
+                  headerStyle: {
+                    backgroundColor: COLORS.bg_button,
+                  },
+                  headerBackTitleVisible: false,
+                })}
+              />
               <Stack.Screen
                 name="Thực hiện Checklist"
                 component={ThucHienChecklist}

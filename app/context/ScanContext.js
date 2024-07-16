@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
-export const LoginContext = createContext();
+export const ScanContext = createContext();
 
-export const LoginProvider = ({ children }) => {
+export const ScanProvider = ({ children }) => {
   const [step, setStep] = useState(1);
 
   const saveStep = (data) => {
@@ -9,10 +9,10 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ step, saveStep }}>
+    <ScanContext.Provider value={{ step, saveStep }}>
       {children}
-    </LoginContext.Provider>
+    </ScanContext.Provider>
   );
 };
 
-export default LoginContext;
+export default ScanContext;

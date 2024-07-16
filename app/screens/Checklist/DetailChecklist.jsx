@@ -58,7 +58,7 @@ const DetailChecklist = ({ route, navigation }) => {
     useContext(ChecklistContext);
   const [isConnected, setIsConnected] = useState(false);
 
-  const { user, authToken } = useSelector((state) => state.authReducer);
+  const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
 
   const [dataChecklistFilter, setDataChecklistFilter] = useState([]);
   const [newActionDataChecklist, setNewActionDataChecklist] = useState([]);
@@ -341,7 +341,7 @@ const DetailChecklist = ({ route, navigation }) => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: "Bearer " + authToken,
+            Authorization: "Bearer " + authTokenChecklist,
           },
         }
       );
@@ -516,7 +516,7 @@ const DetailChecklist = ({ route, navigation }) => {
         .post(BASE_URL_CHECKLIST + `/tb_checklistchitiet/create`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${authTokenChecklist}`,
           },
         })
         .then((res) => {
@@ -581,7 +581,7 @@ const DetailChecklist = ({ route, navigation }) => {
       {
         headers: {
           Accept: "application/json",
-          Authorization: "Bearer " + authToken,
+          Authorization: "Bearer " + authTokenChecklist,
         },
       }
     );
@@ -659,7 +659,7 @@ const DetailChecklist = ({ route, navigation }) => {
       const requestFaild = axios.post(`${BASE_URL_CHECKLIST}/tb_checklistchitiet/create`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authTokenChecklist}`,
         },
       });
   
@@ -674,7 +674,7 @@ const DetailChecklist = ({ route, navigation }) => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${authToken}`,
+            Authorization: `Bearer ${authTokenChecklist}`,
           },
         }
       );

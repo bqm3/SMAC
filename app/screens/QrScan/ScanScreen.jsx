@@ -10,8 +10,10 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   Platform,
+  TextInput,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useContext } from "react";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
@@ -20,13 +22,28 @@ import QRCodeScreen from "./QrCodeScreen";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import ButtonScan from "../../components/Button/ButtonScan";
+import ScanContext from "../../context/ScanContext";
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
+import { BASE_URL_ASSETS } from "../../constants/config";
 
 const ScanScreen = () => {
-  const [isScan, setIsScan] = useState(false);
+  const { step, saveStep } = useContext(ScanContext);
+
+  const { userAsset, authTokenAsset } = useSelector(
+    (state) => state.authReducer
+  );
+
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [opacity, setOpacity] = useState(1);
   const [modalVisibleQr, setModalVisibleQr] = useState(false);
   const [modalVisisbleTaiSan, setModalVisibleTaiSan] = useState(false);
   const [image, setImage] = useState();
+  const [note, setNote] = useState("");
 
   const [taisanQr, setTaiSanQr] = useState([]);
   const [dataTaiSanDetail, setDataTaiSanDetail] = useState(null);
@@ -47,11 +64,54 @@ const ScanScreen = () => {
     }
   };
 
+  const handleKiemketaisan = async () => {
+    try {
+      setLoadingSubmit(true);
+      const formData = new FormData();
+      formData.append("iTinhtrang", 1);
+      formData.append("Ghichu", note);
+
+      const file = {
+        uri:
+          Platform.OS === "android"
+            ? image?.uri
+            : image?.uri.replace("file://", ""),
+        name:
+          image?.fileName ||
+          Math.floor(Math.random() * Math.floor(999999999)) + ".jpg",
+        type: image?.type || "image/jpeg",
+      };
+      formData.append(`Image`, file);
+
+      // debugger;
+      await axios.put(
+        BASE_URL_ASSETS +
+          `/tb_taisanqrcode/scan/${dataTaiSanDetail.ID_TaisanQr}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${authTokenAsset}`,
+          },
+        }
+      );
+      // debugger;
+      setLoadingSubmit(false);
+      toggleModalTaiSanQr(false, 1);
+      clearDataModal();
+      Toast.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: "S.M.A.C ",
+        textBody: "Kiểm kê tài sản thành công",
+      });
+    } catch (err) {
+      setLoadingSubmit(false); // Đảm bảo setLoadingSubmit false trong trường hợp có lỗi
+    }
+  };
+
   useEffect(() => {
     async function fetchDataTaiSan() {
-      const res = await axios.get(
-        "https://checklist.pmcweb.vn/pmc-assets/api/tb_taisanqrcode/all"
-      );
+      const res = await axios.get(BASE_URL_ASSETS + "/tb_taisanqrcode/all");
       if (res.status == 200) {
         setTaiSanQr(res.data.data);
       } else {
@@ -69,11 +129,16 @@ const ScanScreen = () => {
   const toggleModalTaiSanQr = (check, value) => {
     setModalVisibleTaiSan(check);
     setOpacity(value);
+    setImage();
+    setNote();
+    saveStep(1);
   };
 
   const clearDataModal = () => {
     setImage();
+    setNote();
     setDataTaiSanDetail();
+    saveStep(1);
   };
 
   function formatDate(dateString) {
@@ -102,10 +167,10 @@ const ScanScreen = () => {
       );
       if (resData.length >= 1) {
         setDataTaiSanDetail(resData[0]);
-        setIsScan(false);
         setModalVisibleQr(false);
         setModalVisibleTaiSan(true);
         setOpacity(0.4);
+        saveStep(2);
       }
     } else {
       Alert.alert(
@@ -131,256 +196,301 @@ const ScanScreen = () => {
         style={{ flex: 1 }}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <BottomSheetModalProvider>
-            <View
-              style={[
-                styles.container,
-                {
-                  opacity: opacity,
-                  backgroundColor:
-                    modalVisibleQr || modalVisisbleTaiSan ? "black" : "white",
-                  zIndex: 10,
-                },
-              ]}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "700",
-                  position: "absolute",
-                  top: 80,
-                }}
-              >
-                Quản lý tài sản
-              </Text>
-              {modalVisibleQr === false && modalVisisbleTaiSan === false && (
-                <View>
-                  <TouchableOpacity onPress={() => toggleModalQr(true, 0.4)}>
-                    <Image
-                      style={{
-                        width: adjust(300),
-                        height: adjust(300),
-                        resizeMode: "contain",
-                      }}
-                      source={require("../../../assets/images/scan.png")}
-                    />
-                  </TouchableOpacity>
-
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "500",
-                      paddingTop: 10,
-                      textAlign: "center",
-                    }}
-                  >
-                    Ấn vào Qr để Quét
-                  </Text>
-                </View>
-              )}
-            </View>
-
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisibleQr}
-              onRequestClose={() => {
-                toggleModalQr(false, 1);
-                clearDataModal();
-              }}
-            >
-              {modalVisibleQr === true && (
-                <TouchableOpacity
-                  onPress={() => {
-                    toggleModalQr(false, 1);
-                    clearDataModal();
-                  }}
-                  style={{
-                    position: "relative",
-                    top: 60,
-                    left: 30,
-                    zIndex: 100,
-                    width: 40,
-                  }}
-                >
-                  <AntDesign name="closecircle" size={36} color="white" />
-                </TouchableOpacity>
-              )}
+          <AlertNotificationRoot>
+            <BottomSheetModalProvider>
               <View
-                style={[styles.centeredView, { width: "100%", height: "80%" }]}
+                style={[
+                  styles.container,
+                  {
+                    opacity: opacity,
+                    backgroundColor:
+                      modalVisibleQr || modalVisisbleTaiSan ? "black" : "white",
+                    zIndex: 10,
+                  },
+                ]}
               >
-                <View
-                  style={[
-                    styles.modalView,
-                    { width: adjust(320), height: adjust(320) },
-                  ]}
-                >
-                  <QRCodeScreen
-                    handlePushDataFilterQr={handlePushDataFilterQr}
-                    setIsScan={setIsScan}
-                  />
-                </View>
+                {modalVisibleQr === false && modalVisisbleTaiSan === false && (
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => {
+                        toggleModalQr(true, 0.4), saveStep(2);
+                      }}
+                    >
+                      <Image
+                        style={{
+                          width: adjust(300),
+                          height: adjust(300),
+                          resizeMode: "contain",
+                        }}
+                        source={require("../../../assets/images/scan.png")}
+                      />
+                    </TouchableOpacity>
 
-                <Text style={{ color: "white", fontSize: 16, paddingTop: 10 }}>
-                  Hướng camera về phía mã qrcode
-                </Text>
-              </View>
-            </Modal>
-
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisisbleTaiSan}
-              onRequestClose={() => {
-                toggleModalTaiSanQr(false, 1);
-                clearDataModal();
-              }}
-            >
-              {modalVisisbleTaiSan === true && (
-                <TouchableOpacity
-                  onPress={() => {
-                    toggleModalTaiSanQr(false, 1);
-                    clearDataModal();
-                  }}
-                  style={{
-                    position: "relative",
-                    top: 60,
-                    left: 30,
-                    zIndex: 100,
-                    width: 40,
-                  }}
-                >
-                  <AntDesign name="closecircle" size={36} color="white" />
-                </TouchableOpacity>
-              )}
-              <View style={[styles.centeredView]}>
-                <View
-                  style={[
-                    styles.modalViewInfo,
-                    {
-                      width: "85%",
-                      height: "auto",
-                    },
-                  ]}
-                >
-                  <View style={styles.headerModal}>
-                    <Text allowFontScaling={false} style={styles.textModal}>
-                      Xác nhận thông tin
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: "500",
+                        paddingTop: 10,
+                        textAlign: "center",
+                      }}
+                    >
+                      Ấn vào Qr để Quét
                     </Text>
                   </View>
-                  <View style={{ paddingVertical: 20 }}>
-                    <Text
-                      allowFontScaling={false}
-                      style={[styles.textModal, { textAlign: "center" }]}
-                    >
-                      Thực hiện kiểm hàng{" "}
-                      <Text style={{ fontWeight: "700" }}>
-                        {dataTaiSanDetail?.ent_taisan?.Tents} asdf asdf asdf df
-                        asdfasd fadfa dfd
-                      </Text>
-                    </Text>
+                )}
+              </View>
 
-                    <View style={{ marginTop: 30 }}>
-                      <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <Text style={{ width: 100, fontWeight: "600" }}>
-                          Ngày khởi tạo
-                        </Text>
-                        <Text>:</Text>
-                        <Text>
-                          {" "}
-                          {formatDate(dataTaiSanDetail?.Ngaykhoitao)}
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisibleQr}
+                onRequestClose={() => {
+                  toggleModalQr(false, 1);
+                  clearDataModal();
+                  saveStep(1);
+                }}
+              >
+                {modalVisibleQr === true && (
+                  <TouchableOpacity
+                    onPress={() => {
+                      toggleModalQr(false, 1);
+                      clearDataModal();
+                      saveStep(1);
+                    }}
+                    style={{
+                      position: "relative",
+                      top: 60,
+                      left: 30,
+                      zIndex: 100,
+                      width: 40,
+                    }}
+                  >
+                    <AntDesign name="closecircle" size={36} color="white" />
+                  </TouchableOpacity>
+                )}
+                <View
+                  style={[
+                    styles.centeredView,
+                    { width: "100%", height: "80%" },
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.modalView,
+                      { width: adjust(320), height: adjust(320) },
+                    ]}
+                  >
+                    <QRCodeScreen
+                      handlePushDataFilterQr={handlePushDataFilterQr}
+                    />
+                  </View>
+
+                  <Text
+                    style={{ color: "white", fontSize: 16, paddingTop: 10 }}
+                  >
+                    Hướng camera về phía mã qrcode
+                  </Text>
+                </View>
+              </Modal>
+
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisisbleTaiSan}
+                onRequestClose={() => {
+                  toggleModalTaiSanQr(false, 1);
+                  clearDataModal();
+                }}
+              >
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                  style={{ flex: 1 }}
+                >
+                  {modalVisisbleTaiSan === true && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        toggleModalTaiSanQr(false, 1);
+                        clearDataModal();
+                      }}
+                      style={{
+                        position: "relative",
+                        top: 60,
+                        left: 30,
+                        zIndex: 100,
+                        width: 40,
+                      }}
+                    >
+                      <AntDesign name="closecircle" size={36} color="white" />
+                    </TouchableOpacity>
+                  )}
+                  <View style={[styles.centeredView]}>
+                    <View
+                      style={[
+                        styles.modalViewInfo,
+                        {
+                          width: "85%",
+                          height: "auto",
+                        },
+                      ]}
+                    >
+                      <View style={styles.headerModal}>
+                        <Text allowFontScaling={false} style={styles.textModal}>
+                          Xác nhận thông tin
                         </Text>
                       </View>
-                      <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <Text style={{ width: 100, fontWeight: "600" }}>
-                          Giá trị
+                      <View style={{ paddingVertical: 10 }}>
+                        <Text
+                          allowFontScaling={false}
+                          style={[styles.textModal, { textAlign: "center" }]}
+                        >
+                          Thực hiện kiểm hàng{" "}
+                          <Text style={{ fontWeight: "700" }}>
+                            {dataTaiSanDetail?.ent_taisan?.Tents}
+                          </Text>
                         </Text>
-                        <Text>:</Text>
-                        <Text>
-                          {" "}
-                          {dataTaiSanDetail?.Giatri.toLocaleString("it-IT", {
-                            style: "currency",
-                            currency: "VND",
-                          })}
-                        </Text>
+
+                        <View style={{ marginTop: 20 }}>
+                          <View
+                            style={{ flexDirection: "row", marginBottom: 10 }}
+                          >
+                            <Text style={{ width: 100, fontWeight: "600" }}>
+                              Ngày khởi tạo
+                            </Text>
+                            <Text>:</Text>
+                            <Text>
+                              {" "}
+                              {formatDate(dataTaiSanDetail?.Ngaykhoitao)}
+                            </Text>
+                          </View>
+                          <View
+                            style={{ flexDirection: "row", marginBottom: 10 }}
+                          >
+                            <Text style={{ width: 100, fontWeight: "600" }}>
+                              Giá trị
+                            </Text>
+                            <Text>:</Text>
+                            <Text>
+                              {" "}
+                              {dataTaiSanDetail?.Giatri.toLocaleString(
+                                "it-IT",
+                                {
+                                  style: "currency",
+                                  currency: "VND",
+                                }
+                              )}
+                            </Text>
+                          </View>
+                          <View
+                            style={{ flexDirection: "row", marginBottom: 10 }}
+                          >
+                            <Text style={{ width: 100, fontWeight: "600" }}>
+                              Tình trạng
+                            </Text>
+                            <Text>:</Text>
+                            <Text>
+                              {" "}
+                              {dataTaiSanDetail?.iTinhtrang === 0 && "Sử dụng"}
+                            </Text>
+                          </View>
+                          <View
+                            style={{ flexDirection: "row", marginBottom: 10 }}
+                          >
+                            <Text style={{ width: 100, fontWeight: "600" }}>
+                              Người tạo
+                            </Text>
+                            <Text>:</Text>
+                            <Text> {dataTaiSanDetail?.ent_user?.Hoten}</Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <Text style={{ width: 100, fontWeight: "600" }}>
+                              Phòng ban
+                            </Text>
+                            <Text>:</Text>
+                            <Text style={{ flexShrink: 1 }}>
+                              {" "}
+                              {dataTaiSanDetail?.ent_phongbanda?.Tenphongban} (
+                              {
+                                dataTaiSanDetail?.ent_phongbanda?.ent_chinhanh
+                                  .Tenchinhanh
+                              }
+                              )
+                            </Text>
+                          </View>
+                        </View>
                       </View>
-                      <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <Text style={{ width: 100, fontWeight: "600" }}>
-                          Tình trạng
-                        </Text>
-                        <Text>:</Text>
-                        <Text>
-                          {" "}
-                          {dataTaiSanDetail?.iTinhtrang === 0 && "Sử dụng"}
-                        </Text>
-                      </View>
-                      <View style={{ flexDirection: "row", marginBottom: 10 }}>
-                        <Text style={{ width: 100, fontWeight: "600" }}>
-                          Người tạo
-                        </Text>
-                        <Text>:</Text>
-                        <Text> {dataTaiSanDetail?.ent_userChecklist?.Hoten}</Text>
-                      </View>
+
+                      {image && (
+                        <>
+                          <Image
+                            source={{ uri: image?.uri }}
+                            style={styles.image}
+                          />
+
+                          <TextInput
+                            placeholder="Nhập ghi chú"
+                            placeholderTextColor="gray"
+                            textAlignVertical="top"
+                            multiline={true}
+                            blurOnSubmit={true}
+                            style={[
+                              styles.textInput,
+                              {
+                                paddingHorizontal: 10,
+                                height: 70,
+                                marginBottom: 10,
+                              },
+                            ]}
+                            onChangeText={setNote}
+                            value={note}
+                          />
+                        </>
+                      )}
                       <View
                         style={{
                           flexDirection: "row",
-                          marginBottom: 10,
-                          flexWrap: "wrap",
+                          marginHorizontal: 10,
+                          gap: 20,
                         }}
                       >
-                        <Text style={{ width: 100, fontWeight: "600" }}>
-                          Phòng ban
-                        </Text>
-                        <Text>:</Text>
-                        <Text style={{ flexShrink: 1 }}>
-                          {" "}
-                          {dataTaiSanDetail?.ent_phongbanda?.Tenphongban} (
-                          {
-                            dataTaiSanDetail?.ent_phongbanda?.ent_chinhanh
-                              .Tenchinhanh
-                          }
-                          )
-                        </Text>
+                        <ButtonScan
+                          width={"50%"}
+                          text={image ? "Chụp ảnh lại" : "Chụp ảnh"}
+                          backgroundColor={"#326BFF"}
+                          color={"#FFFFFF"}
+                          onPress={() => pickImage()}
+                        />
+                        {image ? (
+                          <ButtonScan
+                            width={"50%"}
+                            text={"Xác nhận"}
+                            backgroundColor={"#326BFF"}
+                            color={"#FFFFFF"}
+                            loading={loadingSubmit}
+                            onPress={() => handleKiemketaisan()}
+                          />
+                        ) : (
+                          <ButtonScan
+                            width={"50%"}
+                            text={"Đóng"}
+                            backgroundColor={"#DCDEE9"}
+                            color={"#7E7C7C"}
+                            onPress={() => {
+                              toggleModalTaiSanQr(false, 1);
+                            }}
+                          />
+                        )}
                       </View>
                     </View>
                   </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      marginHorizontal: 10,
-                      gap: 20,
-                    }}
-                  >
-                    <ButtonScan
-                      width={"49%"}
-                      text={"Chụp ảnh"}
-                      backgroundColor={"#326BFF"}
-                      color={"#FFFFFF"}
-                      onPress={() => pickImage()}
-                    />
-                    {image ? (
-                      <ButtonScan
-                        width={"49%"}
-                        text={"Xác nhận"}
-                        backgroundColor={"#326BFF"}
-                        color={"#FFFFFF"}
-                        onPress={() => toggleModalTaiSanQr(false, 1)}
-                      />
-                    ) : (
-                      <ButtonScan
-                        width={"49%"}
-                        text={"Đóng"}
-                        backgroundColor={"#DCDEE9"}
-                        color={"#7E7C7C"}
-                        onPress={() => toggleModalTaiSanQr(false, 1)}
-                      />
-                    )}
-                  </View>
-                </View>
-              </View>
-            </Modal>
-          </BottomSheetModalProvider>
+                </KeyboardAvoidingView>
+              </Modal>
+            </BottomSheetModalProvider>
+          </AlertNotificationRoot>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </GestureHandlerRootView>
@@ -444,5 +554,24 @@ const styles = StyleSheet.create({
     color: "#21409A",
     paddingBottom: 4,
     fontWeight: "500",
+  },
+
+  image: {
+    width: "90%",
+    height: 160,
+    resizeMode: "contain",
+    marginVertical: 10,
+  },
+
+  textInput: {
+    color: "#05375a",
+    fontSize: adjust(15),
+    borderRadius: 8,
+    borderWidth: 0.5,
+    borderColor: "gray",
+    height: 48,
+    paddingVertical: 4,
+    backgroundColor: "white",
+    width: "100%",
   },
 });

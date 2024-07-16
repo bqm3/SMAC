@@ -20,7 +20,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import ButtonSubmit from "../Button/ButtonSubmit";
 
 const ModalChecklistC = ({
-  // ent_giamsat,
+  ent_giamsat,
   ent_calv,
   dataInput,
   handleChangeText,
@@ -36,52 +36,52 @@ const ModalChecklistC = ({
   //     Giamsat.ID_Giamsat !== null && Giamsat.ID_Giamsat === dataInput.ID_Giamsat
   // );
 
-  const ent_giamsat =[
-    {
-      "Gioitinh": "nam",
-      "Hoten": "gs làm sạch",
-      "ID_Chucvu": 2,
-      "ID_Duan": 10,
-      "ID_Giamsat": 33,
-      "ID_KhoiCV": 1,
-      "Ngaysinh": null,
-      "Sodienthoai": "123",
-      "ent_chucvu": {
-        "Chucvu": "Giám sát"
-      },
-      "ent_duan": {
-        "Duan": "Dự án Test"
-      },
-      "ent_khoicv": {
-        "ID_Khoi": 1,
-        "KhoiCV": "Khối làm sạch"
-      },
-      "iQuyen": 1,
-      "isDelete": 0
-    },
-    {
-      "Gioitinh": "nam",
-      "Hoten": "Nguyễn Hưng Tiến",
-      "ID_Chucvu": 2,
-      "ID_Duan": 10,
-      "ID_Giamsat": 86,
-      "ID_KhoiCV": 1,
-      "Ngaysinh": "2024-07-10T04:51:22.210Z",
-      "Sodienthoai": "0961228679",
-      "ent_chucvu": {
-        "Chucvu": "Giám sát"
-      },
-      "ent_duan": {
-        "Duan": "Dự án Test"
-      },
-      "ent_khoicv": {
-        "ID_Khoi": 1,
-        "KhoiCV": "Khối làm sạch"
-      },
-      "iQuyen": 1,
-      "isDelete": 0
-    }
-  ]
+  // const ent_giamsat =[
+  //   {
+  //     "Gioitinh": "nam",
+  //     "Hoten": "gs làm sạch",
+  //     "ID_Chucvu": 2,
+  //     "ID_Duan": 10,
+  //     "ID_Giamsat": 33,
+  //     "ID_KhoiCV": 1,
+  //     "Ngaysinh": null,
+  //     "Sodienthoai": "123",
+  //     "ent_chucvu": {
+  //       "Chucvu": "Giám sát"
+  //     },
+  //     "ent_duan": {
+  //       "Duan": "Dự án Test"
+  //     },
+  //     "ent_khoicv": {
+  //       "ID_Khoi": 1,
+  //       "KhoiCV": "Khối làm sạch"
+  //     },
+  //     "iQuyen": 1,
+  //     "isDelete": 0
+  //   },
+  //   {
+  //     "Gioitinh": "nam",
+  //     "Hoten": "Nguyễn Hưng Tiến",
+  //     "ID_Chucvu": 2,
+  //     "ID_Duan": 10,
+  //     "ID_Giamsat": 86,
+  //     "ID_KhoiCV": 1,
+  //     "Ngaysinh": "2024-07-10T04:51:22.210Z",
+  //     "Sodienthoai": "0961228679",
+  //     "ent_chucvu": {
+  //       "Chucvu": "Giám sát"
+  //     },
+  //     "ent_duan": {
+  //       "Duan": "Dự án Test"
+  //     },
+  //     "ent_khoicv": {
+  //       "ID_Khoi": 1,
+  //       "KhoiCV": "Khối làm sạch"
+  //     },
+  //     "iQuyen": 1,
+  //     "isDelete": 0
+  //   }
+  // ]
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

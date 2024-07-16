@@ -98,7 +98,6 @@ const ThucHienChecklist = ({ navigation }) => {
   const { tb_checklistc } = useSelector((state) => state.tbReducer);
   const { userChecklist, authTokenChecklist } = useSelector((state) => state.authReducer);
   const { setDataHangmuc, stepKhuvuc } = useContext(DataContext);
-  
 
   const date = new Date();
   const dateDay = moment(date).format("YYYY-MM-DD");
@@ -125,7 +124,7 @@ const ThucHienChecklist = ({ navigation }) => {
     dateHour: dateHour,
     Calv: null,
     ID_Giamsat: null,
-    ID_Duan: userChecklist?.ID_Duan,
+    ID_Duan: userChecklist.ID_Duan,
   });
 
   const [dataImages, setDataImages] = useState({
@@ -522,7 +521,7 @@ const ThucHienChecklist = ({ navigation }) => {
       dateHour: dateHour,
       Calv: null,
       ID_Giamsat: null,
-      ID_Duan: userChecklist?.ID_Duan,
+      ID_Duan: userChecklist.ID_Duan,
     });
     setDataImages({
       Giochupanh1: null,
@@ -553,7 +552,7 @@ const ThucHienChecklist = ({ navigation }) => {
       .put(
         BASE_URL_CHECKLIST + `/tb_checklistc/close/${ID_ChecklistC}`,
         {
-          Giokt: moment(date).format("HH:mm:ss"),
+          Giokt: dateHour,
         },
         {
           headers: {
@@ -575,7 +574,6 @@ const ThucHienChecklist = ({ navigation }) => {
         ]);
       })
       .catch((err) => {
-        console.log(err.response)
         Alert.alert("PMC Thông báo", "Khóa ca thất bại. Vui lòng thử lại!!", [
           {
             text: "Hủy",
@@ -785,7 +783,7 @@ const ThucHienChecklist = ({ navigation }) => {
                     }}
                   >
                    
-                      {userChecklist?.Permission !== 1 && (
+                      {userChecklist.Permission !== 1 && (
                         <ButtonChecklist
                           text={"Thêm mới"}
                           width={"auto"}
@@ -941,7 +939,7 @@ const ThucHienChecklist = ({ navigation }) => {
                       paddingTop: 10,
                     }}
                   >
-                    {userChecklist?.ent_khoicv?.KhoiCV}
+                    {userChecklist.ent_khoicv?.KhoiCV}
                   </Text>
                   <ModalChecklistC
                     ent_giamsat={ent_giamsat}
@@ -976,7 +974,7 @@ const ThucHienChecklist = ({ navigation }) => {
                 </View>
               </BottomSheetModal>
 
-              {newActionCheckList?.length > 0 && userChecklist?.Permission !== 1 && (
+              {newActionCheckList?.length > 0 && userChecklist.Permission !== 1 && (
                 <View
                   style={{
                     width: 60,

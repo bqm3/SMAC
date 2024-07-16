@@ -7,6 +7,7 @@ import { ThemeProvider } from "./app/context/ThemeContext";
 import CheckNavigation from "./app/navigation/CheckNavigation";
 import { UserProvider } from "./app/context/UserContext";
 import { DataProvider } from "./app/context/DataContext";
+import { ScanProvider } from "./app/context/ScanContext";
 import { ChecklistProvider } from "./app/context/ChecklistContext";
 
 import { PaperProvider } from "react-native-paper";
@@ -18,6 +19,7 @@ export default function App() {
     <Provider store={store}>
       <PaperProvider>
         <ThemeProvider>
+          <ScanProvider>
           <UserProvider>
             <DataProvider>
               <ChecklistProvider>
@@ -28,6 +30,7 @@ export default function App() {
               </ChecklistProvider>
             </DataProvider>
           </UserProvider>
+          </ScanProvider>
         </ThemeProvider>
       </PaperProvider>
     </Provider>
