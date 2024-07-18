@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     marginVertical: 120,
   },
   title: {
-    fontFamily: "Sanfrancisco",
+    
     fontSize: adjust(25),
     paddingTop: 20,
     color: "white",

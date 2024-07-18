@@ -40,7 +40,7 @@ import adjust from "../constants/adjust";
 import ButtonSubmit from "../components/Button/ButtonSubmit";
 import ThemeContext from "../context/ThemeContext";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const LoginScreen = ({ navigation }) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
@@ -53,19 +53,19 @@ const LoginScreen = ({ navigation }) => {
     (state) => state.authReducer
   );
 
-  const [loaded, error] = useFonts({
-    'Sanfrancisco': require('../../assets/fonts/Sanfrancisco.ttf'),
-  });
+  // const [loaded, error] = useFonts({
+  //   'Sanfrancisco': require('../../assets/fonts/Sanfrancisco.ttf'),
+  // });
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
+  // useEffect(() => {
+  //   if (loaded || error) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [loaded, error]);
 
-  if (!loaded && !error) {
-    // return null;
-  }
+  // if (!loaded && !error) {
+  //   // return null;
+  // }
 
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["85%"], []);
@@ -167,7 +167,7 @@ const LoginScreen = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        setErrorMsg("Quyền truy cập vị trí đã bị từ chối");
         return;
       }
 
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textDecorationLine: "underline",
     textAlign: "center",
-    fontFamily: "Sanfrancisco",
+    
     fontSize: adjust(15)
   },
   action: {
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     color: "#05375a",
     width: "88%",
-    fontFamily: "Sanfrancisco",
+    
     fontSize: adjust(16),
     height: adjust(50),
   },
