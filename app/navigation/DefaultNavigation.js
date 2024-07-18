@@ -45,10 +45,11 @@ const DefaultNavigation = () => {
 
   const { step, saveStep } = useContext(ScanContext);
 
+  console.log('userAsset',userAsset, userChecklist);
   return (
     <>
       <Stack.Navigator initialRouteName="LoginScreen">
-        {userAsset === null && userChecklist === null && (
+        {(userAsset == null && userChecklist == null) && (
           <Stack.Group>
             <Stack.Screen
               options={{ headerShown: false }}
@@ -58,9 +59,9 @@ const DefaultNavigation = () => {
           </Stack.Group>
         )}
 
-        {((userAsset && authTokenAsset) ||
+        {((userAsset && authTokenAsset) ||(
           userChecklist ||
-          authTokenChecklist) && (
+          authTokenChecklist)) && (
           <Stack.Group>
             <Stack.Group>
               <Stack.Screen

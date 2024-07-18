@@ -40,9 +40,11 @@ import adjust from "../constants/adjust";
 import ButtonSubmit from "../components/Button/ButtonSubmit";
 import ThemeContext from "../context/ThemeContext";
 
-// SplashScreen.preventAutoHideAsync();
+
 
 const LoginScreen = ({ navigation }) => {
+
+  SplashScreen.preventAutoHideAsync();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,15 +59,10 @@ const LoginScreen = ({ navigation }) => {
   //   'Sanfrancisco': require('../../assets/fonts/Sanfrancisco.ttf'),
   // });
 
-  // useEffect(() => {
-  //   if (loaded || error) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded, error]);
+  useEffect(() => {
+      SplashScreen.hideAsync();
+  }, []);
 
-  // if (!loaded && !error) {
-  //   // return null;
-  // }
 
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["85%"], []);
