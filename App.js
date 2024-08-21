@@ -19,18 +19,18 @@ export default function App() {
     <Provider store={store}>
       <PaperProvider>
         <ThemeProvider>
-          <ScanProvider>
           <UserProvider>
-            <DataProvider>
-              <ChecklistProvider>
-                <NavigationContainer>
-                  <StatusBar />
-                  <CheckNavigation />
-                </NavigationContainer>
-              </ChecklistProvider>
-            </DataProvider>
+            <ScanProvider>
+              <DataProvider>
+                <ChecklistProvider>
+                  <NavigationContainer>
+                    <StatusBar />
+                    <CheckNavigation />
+                  </NavigationContainer>
+                </ChecklistProvider>
+              </DataProvider>
+            </ScanProvider>
           </UserProvider>
-          </ScanProvider>
         </ThemeProvider>
       </PaperProvider>
     </Provider>

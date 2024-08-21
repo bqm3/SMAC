@@ -2,24 +2,27 @@
   "expo": {
     "name": "SMAC",
     "slug": "PMC-APP",
+    "displayName": "SMAC",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "splash": {
-      "image": "./assets/PMCONESplash.png",
+      "image": "./assets/PMCONE2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
+      "userInterfaceStyle": "automatic",
       "splash": {
-        "image": "./assets/PMCONESplash.png",
+        "image": "./assets/PMCONE2.png",
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       },
-      "userInterfaceStyle": "automatic",
       "buildNumber": "1",
       "bundleIdentifier": "com.pmc.one",
       "runtimeVersion": {
@@ -35,7 +38,6 @@
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "withoutCredentials": true,
       "versionCode": 1,
       "package": "com.pmc.one",
       "permissions": [
@@ -79,7 +81,8 @@
           "locationAlwaysAndWhenInUsePermission": "Ứng dụng cần truy cập vào vị trí của bạn để cung cấp gợi ý về các địa điểm gần bạn và cải thiện trải nghiệm của bạn."
         }
       ],
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

@@ -10,8 +10,6 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState, useContext } from "react";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import {
@@ -20,34 +18,13 @@ import {
   BottomSheetModalProvider,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import adjust from "../constants/adjust";
-import ThemeContext from "../context/ThemeContext";
 
-SplashScreen.preventAutoHideAsync();
 
 const MultipleScreen = ({ navigation }) => {
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const { theme, toggleTheme, useSystemTheme } = useContext(ThemeContext);
 
   const { authTokenAsset, userAsset, authTokenChecklist, userChecklist } =
     useSelector((state) => state.authReducer);
-
-  const [loaded, error] = useFonts({
-    Sanfrancisco: require("../../assets/fonts/Sanfrancisco.ttf"),
-  });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  if (!loaded && !error) {
-    // return null;
-  }
 
   return (
     <>
@@ -66,15 +43,15 @@ const MultipleScreen = ({ navigation }) => {
                 <View
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  <Image
+                  {/* <Image
                     style={{
                       width: adjust(140),
                       height: adjust(80),
                       resizeMode: "contain",
                     }}
                     source={require("../../assets/images/pmc_logo.png")}
-                  />
-                  <Text style={styles.title}>OUR ECOSYSTEM</Text>
+                  /> */}
+                  {/* <Text style={styles.title}>OUR ECOSYSTEM</Text> */}
                 </View>
                 <View style={styles.card}>
                   <View style={styles.gridContainer}>
@@ -137,7 +114,7 @@ const MultipleScreen = ({ navigation }) => {
                     <View style={styles.item}>
                       <TouchableOpacity
                         style={styles.itemContent}
-                        onPress={() => navigation.navigate("ScanScreen")}
+                        onPress={() => navigation.navigate("PhieuNXScreen")}
                         disabled={userAsset ? false : true}
                       >
                         <View
