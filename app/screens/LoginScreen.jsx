@@ -40,7 +40,7 @@ import adjust from "../constants/adjust";
 import ButtonSubmit from "../components/Button/ButtonSubmit";
 import ThemeContext from "../context/ThemeContext";
 
-// SplashScreen.preventAutoHideAsync();
+
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();

@@ -80,9 +80,7 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Ứng dụng cần truy cập vào vị trí của bạn để cung cấp gợi ý về các địa điểm gần bạn và cải thiện trải nghiệm của bạn."
         }
-      ],
-      "expo-router",
-      "expo-font"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
