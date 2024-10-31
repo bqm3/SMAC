@@ -127,10 +127,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : null}
-          style={{ flex: 1 }}
-        >
+       
           <ImageBackground
             source={require("../../assets/PMCONE2.png")}
             resizeMode="cover"
@@ -147,7 +144,10 @@ const LoginScreen = ({ navigation }) => {
               /> */}
               <View style={{ marginHorizontal: 20 }}>
                 {/* <Title text={"Đăng nhập"} size={adjust(20)} top={30} /> */}
-
+                <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : null}
+          style={{ flex: 1 }}
+        >
                 <View
                   style={{
                     justifyContent: "flex-start",
@@ -235,10 +235,11 @@ const LoginScreen = ({ navigation }) => {
                     theme={theme}
                   />
                 </View>
+                </KeyboardAvoidingView>
               </View>
             </ScrollView>
           </ImageBackground>
-        </KeyboardAvoidingView>
+     
       </GestureHandlerRootView>
     </>
   );

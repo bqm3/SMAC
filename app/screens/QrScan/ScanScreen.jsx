@@ -59,7 +59,7 @@ const ScanScreen = () => {
 
     const result = await ImagePicker.launchCameraAsync();
 
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result?.assets[0]);
     }
   };
